@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity {
             //textGet();
             //textGet_queryMap();
             //textGet_query();
-            //textPost();
-            textPost_query();
+           //textPost_query();
+           // textPost_formUrlEncoded();
+            textPost_formUrlEncoded_map();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,26 +128,7 @@ public class MainActivity extends AppCompatActivity {
     //POST
 
 
-    void textPost() throws IOException {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
-        HttpService service = retrofit.create(HttpService.class);
 
-        Call<HttpService.Result> call = service.testHttpPost(new HttpService.Params("top", "9e05423f7ac6acf6d0dce3425c4ea9fe"));
-        call.enqueue(new Callback<HttpService.Result>() {
-            @Override
-            public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
-
-                list = response.body().result.getData();
-                updateUi();
-            }
-
-            @Override
-            public void onFailure(Call<HttpService.Result> call, Throwable t) {
-                Log.d("xxx", t.getMessage());
-            }
-        });
-
-    }
 
     void textPost_query() throws IOException {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
@@ -168,6 +150,95 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    void textPost_formUrlEncoded() throws IOException {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
+        HttpService service = retrofit.create(HttpService.class);
+
+        Call<HttpService.Result> call = service.testHttpPost_formUrlEncoded("top","9e05423f7ac6acf6d0dce3425c4ea9fe");
+        call.enqueue(new Callback<HttpService.Result>() {
+            @Override
+            public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
+                list = response.body().result.getData();
+                updateUi();
+
+            }
+
+            @Override
+            public void onFailure(Call<HttpService.Result> call, Throwable t) {
+                Log.d("xxx", t.getMessage());
+            }
+        });
+
+    }
+
+
+    void textPost_formUrlEncoded_map() throws IOException {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
+        HttpService service = retrofit.create(HttpService.class);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("type", "top");
+        map.put("key", "9e05423f7ac6acf6d0dce3425c4ea9fe");
+        Call<HttpService.Result> call = service.testHttpPost_formUrlEncoded_map(map);
+        call.enqueue(new Callback<HttpService.Result>() {
+            @Override
+            public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
+                list = response.body().result.getData();
+                updateUi();
+
+            }
+
+            @Override
+            public void onFailure(Call<HttpService.Result> call, Throwable t) {
+                Log.d("xxx", t.getMessage());
+            }
+        });
+
+    }
+
+    void textPost_formUrlEncoded_map_header() throws IOException {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
+        HttpService service = retrofit.create(HttpService.class);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("type", "top");
+        map.put("key", "9e05423f7ac6acf6d0dce3425c4ea9fe");
+        Call<HttpService.Result> call = service.testHttpPost_formUrlEncoded_map_header("Content-type:application/x-www-from-urlencoded;charset=UTF-8",map);
+        call.enqueue(new Callback<HttpService.Result>() {
+            @Override
+            public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
+                list = response.body().result.getData();
+                updateUi();
+
+            }
+
+            @Override
+            public void onFailure(Call<HttpService.Result> call, Throwable t) {
+                Log.d("xxx", t.getMessage());
+            }
+        });
+
+    }
+
+//接口不支持，此方法为模拟用法
+//    void textPost_body() throws IOException {
+//        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/").addConverterFactory(GsonConverterFactory.create()).build();
+//        HttpService service = retrofit.create(HttpService.class);
+//
+//        Call<HttpService.Result> call = service.testHttpPost_body(new HttpService.Params("top","9e05423f7ac6acf6d0dce3425c4ea9fe"));
+//        call.enqueue(new Callback<HttpService.Result>() {
+//            @Override
+//            public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
+//                Log.d("xxx", response.body().reason);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<HttpService.Result> call, Throwable t) {
+//
+//            }
+//        });
+//
+//    }
 
 
     void updateUi() {

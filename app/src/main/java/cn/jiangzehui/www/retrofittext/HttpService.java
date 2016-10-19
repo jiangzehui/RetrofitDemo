@@ -6,7 +6,12 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -26,40 +31,59 @@ public interface HttpService {
     @GET("index")
     Call<Result> testHttpGet_queryMap(@QueryMap HashMap<String, String> map);
 
-    @POST("index")
-    Call<Result> testHttpPost(@Body Params params);
-
 
     @POST("index")
     Call<Result> testHttpPost_query(@Query("type") String type, @Query("key") String key);
 
 
-    //POST GSON -BEAN
-    class Params {
-        String type;
-        String key;
+    @FormUrlEncoded
+    @POST("index")
+    Call<Result> testHttpPost_formUrlEncoded(@Field("type") String type, @Field("key") String key);
 
-        public String getType() {
-            return type;
-        }
+    @FormUrlEncoded
+    @POST("index")
+    Call<Result> testHttpPost_formUrlEncoded_map(@FieldMap HashMap<String, String> map);
 
-        public void setType(String type) {
-            this.type = type;
-        }
+    @Headers("Content-type:application/x-www-from-urlencoded;charset=UTF-8")
+    @FormUrlEncoded
+    @POST("index")
+    Call<Result> testHttpPost_formUrlEncoded_map_headers(@FieldMap HashMap<String, String> map);
 
-        public String getKey() {
-            return key;
-        }
 
-        public void setKey(String key) {
-            this.key = key;
-        }
 
-        public Params(String type, String key) {
-            this.type = type;
-            this.key = key;
-        }
-    }
+    @FormUrlEncoded
+    @POST("index")
+    Call<Result> testHttpPost_formUrlEncoded_map_header(@Header("Content-Type") String contentType,@FieldMap HashMap<String, String> map);
+
+    //接口不支持，模拟用法
+//    @POST("toutiao")
+//    Call<Result> testHttpPost_body(@Body Params params);
+
+//    class Params {
+//        String type;
+//        String key;
+//
+//        public String getType() {
+//            return type;
+//        }
+//
+//        public void setType(String type) {
+//            this.type = type;
+//        }
+//
+//        public String getKey() {
+//            return key;
+//        }
+//
+//        public void setKey(String key) {
+//            this.key = key;
+//        }
+//
+//        public Params(String type, String key) {
+//            this.type = type;
+//            this.key = key;
+//        }
+//    }
 
 
     // GET GSON - BEAN
