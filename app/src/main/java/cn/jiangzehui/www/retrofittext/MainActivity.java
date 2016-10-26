@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
     void textGet_query() throws IOException {
         Api.getInstance().getService().testHttpGet_query("top", "9e05423f7ac6acf6d0dce3425c4ea9fe").enqueue(new Callback<HttpService.Result>() {
             @Override

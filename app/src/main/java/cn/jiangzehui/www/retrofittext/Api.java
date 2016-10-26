@@ -13,13 +13,15 @@ public class Api {
     private HttpService service;
     private static Api instances = new Api();
     private String uri = "http://v.juhe.cn/toutiao/";
-    private Converter.Factory factory = GsonConverterFactory.create();//默认GSON解析
+    private Converter.Factory factory = GsonConverterFactory.create();
 
 
     public static Api getInstance() {
 
         return instances;
     }
+
+
 
 
     private Api() {
