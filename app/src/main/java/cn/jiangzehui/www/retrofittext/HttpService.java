@@ -2,10 +2,10 @@ package cn.jiangzehui.www.retrofittext;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 
 import retrofit2.Call;
-import retrofit2.http.Body;
+
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -13,7 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
+
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
@@ -23,6 +23,7 @@ import retrofit2.http.QueryMap;
 public interface HttpService {
     @GET("index?type=top&key=9e05423f7ac6acf6d0dce3425c4ea9fe")
     Call<Result> testHttpGet();
+
 
     @GET("index")
     Call<Result> testHttpGet_query(@Query("type") String type, @Query("key") String key);
@@ -50,10 +51,9 @@ public interface HttpService {
     Call<Result> testHttpPost_formUrlEncoded_map_headers(@FieldMap HashMap<String, String> map);
 
 
-
     @FormUrlEncoded
     @POST("index")
-    Call<Result> testHttpPost_formUrlEncoded_map_header(@Header("Content-Type") String contentType,@FieldMap HashMap<String, String> map);
+    Call<Result> testHttpPost_formUrlEncoded_map_header(@Header("Content-Type") String contentType, @FieldMap HashMap<String, String> map);
 
     //接口不支持，模拟用法
 //    @POST("toutiao")

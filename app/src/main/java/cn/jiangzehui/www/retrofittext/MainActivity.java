@@ -19,11 +19,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     ListView lv;
@@ -43,12 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         try {
-            //textGet();
+
+            textGet();
+           // textGet_query();
             //textGet_queryMap();
-            //textGet_query();
-           //textPost_query();
-           // textPost_formUrlEncoded();
-            textPost_formUrlEncoded_map();
+            //textPost_query();
+            // textPost_formUrlEncoded();
+            // textPost_formUrlEncoded_map();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,10 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
     //http://v.juhe.cn/toutiao/index?type=top&key=9e05423f7ac6acf6d0dce3425c4ea9fe
     void textGet() throws IOException {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
-        HttpService service = retrofit.create(HttpService.class);
-        Call<HttpService.Result> call = service.testHttpGet();
-        call.enqueue(new Callback<HttpService.Result>() {
+
+        Api.getInstance().getService().testHttpGet().enqueue(new Callback<HttpService.Result>() {
             @Override
             public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
                 list = response.body().result.getData();
@@ -77,12 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void textGet_query() throws IOException {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
-        HttpService service = retrofit.create(HttpService.class);
 
-        Call<HttpService.Result> call = service.testHttpGet_query("top","9e05423f7ac6acf6d0dce3425c4ea9fe");
-        call.enqueue(new Callback<HttpService.Result>() {
+
+    void textGet_query() throws IOException {
+        Api.getInstance().getService().testHttpGet_query("top", "9e05423f7ac6acf6d0dce3425c4ea9fe").enqueue(new Callback<HttpService.Result>() {
             @Override
             public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
                 list = response.body().result.getData();
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("xxx", t.getMessage());
             }
         });
+
 
     }
 
@@ -123,18 +123,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     //POST
-
-
 
 
     void textPost_query() throws IOException {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
         HttpService service = retrofit.create(HttpService.class);
 
-        Call<HttpService.Result> call = service.testHttpPost_query("top","9e05423f7ac6acf6d0dce3425c4ea9fe");
+        Call<HttpService.Result> call = service.testHttpPost_query("top", "9e05423f7ac6acf6d0dce3425c4ea9fe");
         call.enqueue(new Callback<HttpService.Result>() {
             @Override
             public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
@@ -156,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://v.juhe.cn/toutiao/").addConverterFactory(GsonConverterFactory.create()).build();
         HttpService service = retrofit.create(HttpService.class);
 
-        Call<HttpService.Result> call = service.testHttpPost_formUrlEncoded("top","9e05423f7ac6acf6d0dce3425c4ea9fe");
+        Call<HttpService.Result> call = service.testHttpPost_formUrlEncoded("top", "9e05423f7ac6acf6d0dce3425c4ea9fe");
         call.enqueue(new Callback<HttpService.Result>() {
             @Override
             public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
@@ -203,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         HashMap<String, String> map = new HashMap<>();
         map.put("type", "top");
         map.put("key", "9e05423f7ac6acf6d0dce3425c4ea9fe");
-        Call<HttpService.Result> call = service.testHttpPost_formUrlEncoded_map_header("Content-type:application/x-www-from-urlencoded;charset=UTF-8",map);
+        Call<HttpService.Result> call = service.testHttpPost_formUrlEncoded_map_header("Content-type:application/x-www-from-urlencoded;charset=UTF-8", map);
         call.enqueue(new Callback<HttpService.Result>() {
             @Override
             public void onResponse(Call<HttpService.Result> call, Response<HttpService.Result> response) {
